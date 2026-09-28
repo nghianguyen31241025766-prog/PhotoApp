@@ -9,26 +9,36 @@ import android.widget.GridView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-  public GridView gridview;
+  private GridView gridView;
+  private UserData userData;
 
-  private AdapterView.OnItemClickListener onitemclick = new AdapterView.OnItemClickListener() {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-      Intent intent = new Intent(getBaseContext(), ViewArticleActivity.class);
-      intent.putExtra("id", gridview.getAdapter().getItemId(position));
-      startActivity(intent);
-    }
+  private final AdapterView.OnItemClickListener onItemClick = (parent, view, position, id) -> {
+    UserProfile user = (UserProfile) parent.getAdapter().getItem(position);
+    Intent intent = new Intent(MainActivity.this, ViewArticleActivity.class);
+    intent.putExtra("username", user.getUsername());
+    intent.putExtra("id", user.getId());
+    startActivity(intent);
   };
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    getSupportActionBar().hide();
 
-    gridview = findViewById(R.id.gridview);
-    new ArticleData(getBaseContext(), gridview).loadData("https://raw.githubusercontent.com/thanhdnh/json/main/products.json", this);
-    gridview.setOnItemClickListener(onitemclick);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().hide();
+    }
+
+    gridView = findViewById(R.id.gridview);
+    gridView.setOnItemClickListener(onItemClick);
+
+    userData = new UserData(this, gridView);
+    userData.loadData("https://api.github.com/users?per_page=30", this);
   }
 
+  @Override
+  protected void onDestroy() {
+    if (userData != null) userData.shutdown();
+    super.onDestroy();
+  }
 }
