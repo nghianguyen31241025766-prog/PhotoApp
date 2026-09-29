@@ -24,6 +24,7 @@ public class ViewArticleActivity extends AppCompatActivity {
   private TextView description;
   private TextView company;
   private TextView location;
+  private TextView hobby;
   private TextView githubUrl;
   private ProgressBar progressBar;
   private Button downloadButton;
@@ -44,6 +45,7 @@ public class ViewArticleActivity extends AppCompatActivity {
     description = findViewById(R.id.tv_detail_description);
     company = findViewById(R.id.tv_detail_company);
     location = findViewById(R.id.tv_detail_location);
+    hobby = findViewById(R.id.tv_detail_hobby);
     githubUrl = findViewById(R.id.tv_detail_url);
     progressBar = findViewById(R.id.download_progress);
     downloadButton = findViewById(R.id.btn_download);
@@ -68,6 +70,7 @@ public class ViewArticleActivity extends AppCompatActivity {
     description.setText(safe(user.getDescription(), "Chưa có mô tả"));
     company.setText("Company: " + safe(user.getCompany(), "Chưa cập nhật"));
     location.setText("Location: " + safe(user.getLocation(), "Chưa cập nhật"));
+    hobby.setText("Hobby: " + safe(user.getHobby(), "Chưa cập nhật"));
     githubUrl.setText(safe(user.getHtmlUrl(), ""));
 
     Picasso.get()

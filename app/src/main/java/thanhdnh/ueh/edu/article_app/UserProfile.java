@@ -36,6 +36,10 @@ public class UserProfile {
     @Expose
     private String location;
 
+    @SerializedName("hobby")
+    @Expose
+    private String hobby;
+
     @SerializedName("html_url")
     @Expose
     private String htmlUrl;
@@ -63,6 +67,9 @@ public class UserProfile {
 
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
+
+    public String getHobby() { return hobby; }
+    public void setHobby(String hobby) { this.hobby = hobby; }
 
     public String getHtmlUrl() { return htmlUrl; }
     public void setHtmlUrl(String htmlUrl) { this.htmlUrl = htmlUrl; }
